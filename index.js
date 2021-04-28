@@ -85,7 +85,7 @@ function algoritmoGenetico(populacao) {
 
   //encontrando os individuos com o metodo filter
   let encontrarIndividuo = populacaoFit.filter(function (i) {
-    return i.fitness < 200;
+    return i.fitness < 300;
   });
 
   console.log("encontrarIndividuo", encontrarIndividuo);
