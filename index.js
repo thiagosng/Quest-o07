@@ -1,11 +1,20 @@
+/*
+ AVALIAÇÃO DE INTELIGÊNCIA ARTIFICIAL
+
+ ALUNO: THIAGO SILVA NUNES DE GOUVÊA
+
+
+*/
+
+
 let shuffle = (this && this.shuffle) || function () {
   for (var v = 0, i = 0, ag = arguments.length; i < ag; i++) v = v + arguments[i].length;  
-    for (var r = Array(v), k = 0, i = 0; i < ag; i++)
-      for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++) r[k] = a[j];
+    for (var y = Array(v), k = 0, i = 0; i < ag; i++)
+      for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++) y[k] = a[j];
       
-  return r;
+  return y;
 };
-//("");
+
 
 let individuoPop = [
 { 
@@ -42,7 +51,7 @@ let individuoPop = [
 },
 ];
 
-
+// função que calcula o fitness de acordo com a formula do fit
 function encontrarFitness(x) {
 
 formulaCalc = parseFloat((Math.pow(x, 2) - 4 * x + 6).toFixed(10));
@@ -74,7 +83,7 @@ function algoritmoGenetico(populacao) {
 
   console.log("Fitness da população: ", populacaoFit);
 
- 
+  //encontrando os individuos com o metodo filter
   let encontrarIndividuo = populacaoFit.filter(function (i) {
     return i.fitness < 200;
   });
@@ -112,10 +121,15 @@ function algoritmoGenetico(populacao) {
   let segundoArray= [];
 
  
+  // Encontrando os melhores individuos pela seleção em torneio
   melhoresIndividuos.forEach(function (expr) {
+
       let binario = expr.Individuo;
-      let first = binario.slice(0, 4); //separar os arrays
-      let second= binario.slice(4, 8); //separar os arrays
+      //metodo slice faz o fatiamento do array para o cruzamento
+      let first = binario.slice(0, 4);
+       
+      let second= binario.slice(4, 8);
+       
     firstArray.push(first);
     segundoArray.push(second);
   });
@@ -130,27 +144,39 @@ function algoritmoGenetico(populacao) {
     };
   });
 
-  individuoPop = shuffle(melhoresIndividuos, novaPopulacao);
 
+  individuoPop = shuffle(melhoresIndividuos, novaPopulacao);
+  // gerando a nova população 
   let populacaoEvoluida = individuoPop.map(function (expr) {
    
       let dados = expr.Individuo.split("");
+
       let modDadosArray = dados.map(function (Individuo) {
+
       return "" + Math.round(Math.random());
+
     });
+
     let modDados = modDadosArray.join("");
+
     return {
+
       Individuo: modDados,
+
       fitness: 0,
+
     };
   });
   individuoPop = populacaoEvoluida;
 };
 
+//Enquanto não atingir as 200 gerações o algoritmo se repetirá
 while (geracoes < 200) {
   novaGeracao();
 }
 
 return "População encontrada com os critérios";
 }
+
+// Rodando o algoritmo
 algoritmoGenetico(individuoPop);
